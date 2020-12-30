@@ -4,9 +4,6 @@ LOCAL_PATH:= $(call my-dir)
 
 include $(CLEAR_VARS)
 
-LOCAL_COPY_HEADERS_TO := qcom/camera
-LOCAL_COPY_HEADERS := QCameraFormat.h
-
 LOCAL_SRC_FILES := \
         util/QCameraBufferMaps.cpp \
         util/QCameraCmdThread.cpp \
@@ -72,9 +69,6 @@ endif
 ifeq ($(filter OMR1 O 8.1.0, $(PLATFORM_VERSION)), )
 USE_DISPLAY_SERVICE := true
 LOCAL_CFLAGS += -DUSE_DISPLAY_SERVICE
-LOCAL_CFLAGS += -std=c++11 -std=gnu++1y
-else
-LOCAL_CFLAGS += -std=c++11 -std=gnu++0x
 endif
 
 #HAL 1.0 Flags
@@ -84,14 +78,14 @@ LOCAL_C_INCLUDES := \
         $(LOCAL_PATH)/../mm-image-codec/qexif \
         $(LOCAL_PATH)/../mm-image-codec/qomx_core \
         $(LOCAL_PATH)/include \
-        $(LOCAL_PATH)/stack/common \
         $(LOCAL_PATH)/stack/mm-camera-interface/inc \
         $(LOCAL_PATH)/util \
         $(LOCAL_PATH)/HAL3 \
-        $(call project-path-for,qcom-media)/libstagefrighthw \
-        $(call project-path-for,qcom-media)/mm-core/inc \
+	hardware/qcom-caf/msm8996/media/libstagefrighthw \
+	hardware/qcom-caf/msm8996/media/mm-core/inc \
         $(TARGET_OUT_HEADERS)/mm-camera-lib/cp/prebuilt
 
+LOCAL_HEADER_LIBRARIES += camera_common_headers
 LOCAL_HEADER_LIBRARIES := media_plugin_headers
 LOCAL_HEADER_LIBRARIES += libandroid_sensor_headers
 LOCAL_HEADER_LIBRARIES += libcutils_headers
@@ -120,8 +114,6 @@ endif
 
 #LOCAL_STATIC_LIBRARIES := libqcamera2_util
 LOCAL_C_INCLUDES += \
-        $(TARGET_OUT_HEADERS)/qcom/display
-LOCAL_C_INCLUDES += \
         $(call project-path-for,qcom-display)/libqservice
 LOCAL_SHARED_LIBRARIES := liblog libhardware libutils libcutils libdl libsync
 LOCAL_SHARED_LIBRARIES += libmmcamera_interface libmmjpeg_interface libui libcamera_metadata
@@ -134,6 +126,8 @@ endif
 ifeq ($(TARGET_TS_MAKEUP),true)
 LOCAL_SHARED_LIBRARIES += libts_face_beautify_hal libts_detected_face_hal
 endif
+LOCAL_HEADER_LIBRARIES += camera_common_headers
+LOCAL_HEADER_LIBRARIES += display_headers
 
 LOCAL_STATIC_LIBRARIES := android.hardware.camera.common@1.0-helper
 
@@ -145,6 +139,11 @@ LOCAL_MODULE_TAGS := optional
 
 LOCAL_32_BIT_ONLY := $(BOARD_QTI_CAMERA_32BIT_ONLY)
 include $(BUILD_SHARED_LIBRARY)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := camera_common_headers
+LOCAL_EXPORT_C_INCLUDE_DIRS := $(LOCAL_PATH)/stack/common
+include $(BUILD_HEADER_LIBRARY)
 
 include $(call first-makefiles-under,$(LOCAL_PATH))
 endif

@@ -19,10 +19,8 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/product_launched_with_n_mr1.mk
 
 # Overlay
 DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay
-DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay-lineage
 
 PRODUCT_ENFORCE_RRO_EXCLUDED_OVERLAYS += \
-    $(LOCAL_PATH)/overlay-lineage/lineage-sdk \
     $(LOCAL_PATH)/overlay/packages/apps/Snap
 
 # Inherit from msm8953-common
@@ -52,10 +50,18 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     android.hardware.boot@1.0-impl \
     android.hardware.boot@1.0-service \
-    bootctrl.msm8953 \
+    android.hardware.boot@1.0-impl.recovery \
+    bootctrl.msm8953
 
 PRODUCT_PACKAGES_DEBUG += \
     bootctl
+
+PRODUCT_PACKAGES += \
+    bootctrl.msm8953.recovery \
+    bootctrl.msm8953 \
+    libcutils \
+    libgptutils.tissot.recovery \
+    libz
 
 # Audio configuration
 PRODUCT_COPY_FILES += \
@@ -71,6 +77,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     android.hardware.ir@1.0-impl \
     android.hardware.ir@1.0-service
+
+# Messaging
+PRODUCT_PACKAGES += \
+   messaging
 
 # Properties
 -include device/xiaomi/tissot/prop.mk
@@ -90,9 +100,8 @@ PRODUCT_COPY_FILES += \
 PRODUCT_SOONG_NAMESPACES += \
     $(LOCAL_PATH)
 
-# Touch HAL
-PRODUCT_PACKAGES += \
-    vendor.lineage.touch@1.0-service.xiaomi_8953
+PRODUCT_SOONG_NAMESPACES += \
+    hardware/qcom-caf/msm8996
 
 # Update engine
 PRODUCT_PACKAGES += \

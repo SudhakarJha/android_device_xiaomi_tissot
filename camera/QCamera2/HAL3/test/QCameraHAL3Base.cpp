@@ -58,6 +58,8 @@ QCameraHAL3VideoTest *mVideotestCase = NULL;
 QCameraHAL3SnapshotTest *mSnapshottestCase = NULL;
 QCameraHAL3RawSnapshotTest *mRawSnapshottestCase = NULL;
 
+using ::android::hardware::camera::common::V1_0::helper::CameraMetadata;
+
 struct timeval start_time;
 int capture_received;
 int pfd[2];
@@ -436,7 +438,7 @@ void CameraHAL3Base::hal3appCamCapabilityGet(hal3_camera_lib_test *handle, int c
     int i = 0, count = 0, j = 0;
     long int num = 0;
     int32_t *available_hdr = NULL, *available_svhdr = NULL, *available_ir = NULL;
-    android::CameraMetadata hal3_cam_settings;
+    android::hardware::camera::common::V1_0::helper::CameraMetadata hal3_cam_settings;
     printf("\n Number of Cameras are : %d and %p", camid, &(test_obj_handle->cam_info));
     my_if_handle->get_camera_info(camid, &(test_obj_handle->cam_info));
     info = test_obj_handle->cam_info;
