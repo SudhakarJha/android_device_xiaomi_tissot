@@ -21,13 +21,13 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 # Inherit from tissot device
 $(call inherit-product, device/xiaomi/tissot/device.mk)
 
-# Inherit some common arrowOS stuff.
-$(call inherit-product, vendor/arrow/config/common.mk)
+# Inherit some common posp stuff.
+$(call inherit-product, vendor/potato/config/common_full_phone.mk)
 
 # Device identifier. This must come after all inclusions
 DEVICE_MAINTAINER := Sudhakar Jha
 PRODUCT_DEVICE := tissot
-PRODUCT_NAME := arrow_tissot
+PRODUCT_NAME := potato_tissot
 BOARD_VENDOR := Xiaomi
 PRODUCT_BRAND := Xiaomi
 PRODUCT_MODEL := Mi A1
