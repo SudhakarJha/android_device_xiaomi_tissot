@@ -20,6 +20,3 @@ PRODUCT_PROPERTY_OVERRIDES += \
 persist.vendor.delta_time.enable=true \
 persist.delta_time.enable=true
 
-#Enable Virtual key
-PRODUCT_PROPERTY_OVERRIDES += \
-qemu.hw.mainkeys=0
